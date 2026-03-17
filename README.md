@@ -122,5 +122,5 @@ background: url('./assets/Beach_resize.png') center / cover no-repeat;
 ## Autore
 
 **Eldar Dedic** — Junior Python Developer  
-📧 [eldardedic@proton.me](mailto:eldardedic@proton.me)  
-🐙 [github.com/breama-oss](https://github.com/breama-oss)
+[eldardedic@proton.me](mailto:eldardedic@proton.me)  
+[github.com/breama-oss](https://github.com/breama-oss)
