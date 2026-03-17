@@ -1,0 +1,560 @@
+/* RESET & BASE */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* THREE.JS CANVAS */
+
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 0;
+}
+
+/* BIOS OVERLAY */
+
+#biosOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: black;
+  color: #00ff00;
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.bios-content {
+  width: 80%;
+  max-width: 600px;
+  text-align: left;
+}
+
+.bios-progress {
+  width: 100%;
+  height: 10px;
+  background: #004000;
+  margin-top: 20px;
+  border: 1px solid #00ff00;
+}
+
+#biosBar {
+  width: 0%;
+  height: 100%;
+  background: #00ff00;
+  transition: none; 
+}
+
+/* DESKTOP */
+
+#desktop {
+  position: fixed;
+  inset: 0;
+  background: url('./assets/Beach_resize.png') center / cover no-repeat;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background-color: #008080;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+}
+
+/* DESKTOP ICONS */
+
+.desktop-icons {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 150px;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+  font-size: 11px;
+}
+
+.desktop-icon img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+
+.desktop-icon:hover {
+  background: rgba(0, 0, 128, 0.4);
+}
+
+.desktop-icon.dragging {
+  opacity: 0.75;
+  cursor: grabbing !important;
+  outline: 1px dotted rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 128, 0.5);
+  z-index: 500;
+}
+
+.desktop-icon[style*="position: absolute"] {
+  cursor: grab;
+}
+
+.desktop-icon span {
+  padding: 2px 4px;
+}
+
+/* TASKBAR */
+
+.taskbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  z-index: 1000;
+}
+
+.start-button {
+  height: 24px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: bold;
+  border: 2px outset #dfdfdf;
+  background: #c0c0c0;
+  cursor: pointer;
+}
+
+.start-button:active {
+  border-style: inset;
+}
+
+.start-button img {
+  width: 16px;
+  height: 16px;
+}
+
+.taskbar-apps {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.taskbar-app {
+  height: 24px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 2px outset #dfdfdf;
+  background: #c0c0c0;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.taskbar-app.active {
+  border-style: inset;
+  background: #ffffff;
+}
+
+.taskbar-app img {
+  width: 16px;
+  height: 16px;
+}
+
+.taskbar-clock {
+  height: 24px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  border: 2px inset #dfdfdf;
+  background: #c0c0c0;
+  min-width: 60px;
+  justify-content: center;
+}
+
+/* START MENU */
+
+.start-menu {
+  position: absolute;
+  bottom: 28px;
+  left: 2px;
+  width: 150px;
+  background: #c0c0c0;
+  border: 2px outset #dfdfdf;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  z-index: 2000;
+}
+
+.start-menu button {
+  padding: 6px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.start-menu button:hover {
+  background: #000080;
+  color: white;
+}
+
+/* CV WINDOW */
+
+.cv-window {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 4px 10px rgba(240, 116, 116, 0.5);
+}
+
+.cv-window.maximized {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 28px;
+}
+
+/* GITHUB WINDOW */
+
+.github-window {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 400px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.github-window.maximized {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: calc(100% - 28px) !important;
+  box-shadow: none;
+}
+
+/* MENU BAR */
+
+.menu-bar {
+  background: #c0c0c0;
+  border-bottom: 2px solid #ffffff;
+  display: flex;
+  padding: 2px;
+}
+
+.menu-bar button {
+  padding: 2px 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+.menu-bar button:hover {
+  background: #000080;
+  color: #ffffff;
+}
+
+/* DROPDOWN */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  font-family: inherit;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #c0c0c0;
+  min-width: 120px;
+  z-index: 10;
+  border: 2px solid black;
+  box-shadow: 2px 2px #fff inset, -2px -2px #fff inset;
+  font-size: inherit;
+}
+
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  padding: 2px 8px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: default;
+  font-size: inherit;
+}
+
+.dropdown-content button:hover {
+  background-color: #000080;
+  color: #fff;
+}
+
+/* CV CONTENT */
+
+.cv-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.cv-columns {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.cv-column-left,
+.cv-column-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* CV SECTIONS */
+
+.cv-section {
+  margin-bottom: 16px;
+}
+
+.section-header {
+  background: #000080;
+  color: #ffffff;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  border: 2px outset #dfdfdf;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.profile-text {
+  padding: 8px;
+  background: #ffffff;
+  border: 2px inset #dfdfdf;
+  margin: 0;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+.contact-info {
+  padding: 8px;
+  background: #ffffff;
+  border: 2px inset #dfdfdf;
+}
+
+.contact-info label {
+  font-weight: bold;
+  margin-top: 8px;
+  display: block;
+}
+
+.contact-info label:first-of-type {
+  margin-top: 0;
+}
+
+.contact-info p {
+  margin: 2px 0 8px;
+  padding-left: 4px;
+}
+
+.compact-list {
+  margin: 4px 0;
+  padding-left: 20px;
+  list-style-type: square;
+}
+
+.compact-list li {
+  margin: 2px 0;
+  line-height: 1.4;
+}
+
+fieldset {
+  border: 2px groove #dfdfdf;
+  padding: 8px;
+  margin: 8px 0;
+  background: #ffffff;
+}
+
+fieldset legend {
+  font-weight: bold;
+  padding: 0 4px;
+  color: #000080;
+}
+
+.sunken-panel {
+  background: #ffffff;
+  border: 2px inset #dfdfdf;
+  padding: 8px;
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.sunken-panel strong {
+  color: #000080;
+}
+
+.sunken-panel p {
+  margin: 4px 0 0;
+}
+
+.experience-item,
+.education-item,
+.course-item {
+  margin-bottom: 8px;
+}
+
+/* CV FOOTER */
+
+.cv-footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid #dfdfdf;
+}
+
+.gdpr-text {
+  padding: 8px;
+  background: #ffffcc;
+  border: 2px inset #dfdfdf;
+  margin: 0;
+  text-align: center;
+}
+
+.gdpr-text small {
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+/* STATUS BAR */
+
+.status-bar {
+  display: flex;
+  gap: 2px;
+}
+
+.status-bar-field {
+  padding: 2px 4px;
+  border: 2px inset #dfdfdf;
+  background: #c0c0c0;
+  margin: 0;
+  font-size: 10px;
+}
+
+.status-bar-field:first-child {
+  flex: 1;
+}
+
+/* SCROLLBAR (webkit) */
+
+.cv-content::-webkit-scrollbar        { width: 16px; }
+.cv-content::-webkit-scrollbar-track  { background: #c0c0c0; }
+.cv-content::-webkit-scrollbar-thumb  { background: #dfdfdf; border: 2px outset #ffffff; }
+.cv-content::-webkit-scrollbar-thumb:hover { background: #c0c0c0; }
+.cv-content::-webkit-scrollbar-button { background: #c0c0c0; border: 2px outset #ffffff; height: 16px; }
+
+/* ANIMATIONS */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .cv-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .cv-window {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cv-content {
+    padding: 8px;
+  }
+
+  .section-header h2 {
+    font-size: 11px;
+  }
+
+  .cv-window {
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 35px;
+  }
+}
+
+/* PRINT */
+
+@media print {
+  .taskbar,
+  .title-bar,
+  .menu-bar,
+  .status-bar {
+    display: none;
+  }
+
+  .cv-window {
+    position: static;
+    box-shadow: none;
+    border: none;
+  }
+
+  .cv-content {
+    overflow: visible;
+  }
+}

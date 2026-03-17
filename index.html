@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV – Eldar Dedic</title>
+  <link rel="stylesheet" href="https://unpkg.com/98.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- THREE.JS CANVAS -->
+  <canvas id="scene"></canvas>
+
+  <!-- BIOS OVERLAY -->
+  <div id="biosOverlay" class="hidden">
+    <div class="bios-content">
+      <pre id="biosText">
+        Initializing system...
+        Loading hardware...
+        Detecting peripherals...
+        Starting services...
+      </pre>
+      <div class="bios-progress">
+        <div id="biosBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div id="desktop" class="hidden">
+
+    <!-- DESKTOP ICONS -->
+    <div class="desktop-icons">
+      <div class="desktop-icon" id="cvIcon">
+        <img src="https://win98icons.alexmeub.com/icons/png/notepad-0.png" alt="CV" />
+        <span>Curriculum Vitae</span>
+      </div>
+      <div class="desktop-icon" id="githubIcon">
+        <img src="https://win98icons.alexmeub.com/icons/png/html-0.png" alt="GitHub" />
+        <span>GitHub</span>
+      </div>
+    </div>
+
+    <!-- CV WINDOW -->
+    <div class="window cv-window hidden" id="cvWindow">
+      <div class="title-bar">
+        <div class="title-bar-text">📄 Curriculum Vitae - Eldar Dedic</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close" class="closeBtn"></button>
+        </div>
+      </div>
+
+      <!-- MENU BAR -->
+      <div class="menu-bar">
+        <div class="dropdown">
+          <button id="fileBtn">File ▾</button>
+          <div class="dropdown-content hidden" id="fileMenu">
+            <button id="downloadBtn">Scarica CV</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CV CONTENT -->
+      <div class="window-body cv-content">
+
+        <div class="cv-section">
+          <div class="section-header"><h2>PROFILO PERSONALE</h2></div>
+          <p class="profile-text">
+            Junior Python Developer con esperienza nello sviluppo full-stack e integrazione
+            di soluzioni software. Background in cinema e nuovi media, con forte interesse
+            per l'automazione, l'analisi dati e lo sviluppo di applicazioni web. Abile
+            nell'apprendimento rapido e nel lavoro in team, orientato alla crescita tecnica
+            continua.
+          </p>
+        </div>
+
+        <div class="cv-columns">
+
+          <!--Left column-->
+          <div class="cv-column-left">
+
+            <div class="cv-section">
+              <div class="section-header"><h2>CONTATTI</h2></div>
+              <div class="contact-info">
+                <label>Telefono:</label>
+                <p>+39 346 418 3731</p>
+                <label>Email:</label>
+                <p><a href="mailto:eldardedic@proton.me">eldardedic@proton.me</a></p>
+                <label>GitHub:</label>
+                <p><a href="https://github.com/breama-oss" target="_blank" rel="noopener">github.com/breama-oss</a></p>
+                <label>Patente:</label>
+                <p>Patente B</p>
+              </div>
+            </div>
+
+            <div class="cv-section">
+              <div class="section-header"><h2>SKILLS</h2></div>
+              <fieldset>
+                <legend>Linguaggi</legend>
+                <ul class="compact-list">
+                  <li>Python</li>
+                  <li>HTML, CSS, Javascript</li>
+                </ul>
+              </fieldset>
+              <fieldset>
+                <legend>Framework</legend>
+                <ul class="compact-list">
+                  <li>Vue, Quasar</li>
+                </ul>
+              </fieldset>
+              <fieldset>
+                <legend>Database</legend>
+                <ul class="compact-list">
+                  <li>MySQL, PostgreSQL</li>
+                </ul>
+              </fieldset>
+              <fieldset>
+                <legend>Sistemi operativi</legend>
+                <ul class="compact-list">
+                  <li>Linux, Mac, Windows</li>
+                </ul>
+              </fieldset>
+              <fieldset>
+                <legend>Strumenti</legend>
+                <ul class="compact-list">
+                  <li>Git, Docker</li>
+                </ul>
+              </fieldset>
+              <fieldset>
+                <legend>Grafica</legend>
+                <ul class="compact-list">
+                  <li>Photoshop, Illustrator, GIMP, Figma</li>
+                  <li>Blender, Catia V5, Solidworks</li>
+                </ul>
+              </fieldset>
+              <fieldset>
+                <legend>Video editing</legend>
+                <ul class="compact-list">
+                  <li>DaVinci, iMovie, Capcut</li>
+                </ul>
+              </fieldset>
+            </div>
+
+            <div class="cv-section">
+              <div class="section-header"><h2>LINGUE</h2></div>
+              <ul class="compact-list">
+                <li>Italiano (madrelingua)</li>
+                <li>Inglese</li>
+                <li>Francese</li>
+                <li>Bosniaco</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!--Right column-->
+          <div class="cv-column-right">
+
+            <div class="cv-section">
+              <div class="section-header"><h2>ESPERIENZA PROFESSIONALE</h2></div>
+
+              <div class="experience-item sunken-panel">
+                <strong>Junior Python Developer</strong> | 2025 — <em>EURIX</em>
+                <p>Sviluppo applicazione full-stack, definizione sistema di riconoscimento
+                facciale con offuscamento dei volti con intelligenza artificiale.</p>
+              </div>
+
+              <div class="experience-item sunken-panel">
+                <strong>Addetto pubbliche relazioni</strong> | 2024 — <em>ITER</em>
+                <p>Progettazione e organizzazione di attività rivolte ad un pubblico eterogeneo,
+                allo sviluppo di progetti finalizzati a diffondere una cultura educativa nelle
+                diverse accezioni delle mission dei centri di ITER.</p>
+              </div>
+
+              <div class="experience-item sunken-panel">
+                <strong>Cinema Greenwich Village</strong> | 2022
+                <p>Gestione della proiezione filmica, vendita dei biglietti, gestione pagine
+                social media e sito web del cinema.</p>
+              </div>
+
+              <div class="experience-item sunken-panel">
+                <strong>Libraccio</strong> | 2021
+                <p>Vendita dei libri, gestione del magazzino, assistenza clienti. Allestimento
+                stand Libraccio per il Salone Internazionale del Libro 2021.</p>
+              </div>
+
+              <div class="experience-item sunken-panel">
+                <strong>Libreria Therese</strong> | 2019
+                <p>Vendita dei libri, gestione del magazzino. Allestimento stand in occasione
+                di Torino Spiritualità 2019 e Portici di Carta 2019.</p>
+              </div>
+            </div>
+
+            <div class="cv-section">
+              <div class="section-header"><h2>FORMAZIONE E ISTRUZIONE</h2></div>
+              <div class="sunken-panel education-item">
+                <strong>Laurea magistrale in Cinema, arti della scena e musica</strong><br>
+                Università degli studi di Torino | 2023
+              </div>
+              <div class="sunken-panel education-item">
+                <strong>Laurea triennale in DAMS</strong><br>
+                Università degli studi di Torino | 2020
+              </div>
+            </div>
+
+            <div class="cv-section">
+              <div class="section-header"><h2>CORSI E ATTESTATI</h2></div>
+              <div class="sunken-panel course-item">
+                <strong>IFTS – Tecniche per la progettazione e lo sviluppo di applicazioni informatiche</strong><br>
+                Specializzazione tecnica superiore — Progetto Marconi | 2026
+              </div>
+              <div class="sunken-panel course-item">
+                <strong>Formazione specifica dei lavoratori in materia di sicurezza – rischio basso</strong><br>
+                Assocam Scuola Camerana | 2024
+              </div>
+              <div class="sunken-panel course-item">
+                <strong>Formazione generale dei lavoratori in materia di sicurezza</strong><br>
+                Assocam Scuola Camerana | 2024
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="cv-footer">
+          <p class="gdpr-text">
+            <small>Autorizzo il trattamento dei dati personali presenti nel CV ai sensi del
+            D.Lgs. 2018/101 e del GDPR (Regolamento UE 2016/679)</small>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="status-bar">
+        <p class="status-bar-field">Ready</p>
+        <p class="status-bar-field">Windows 95 Edition</p>
+      </div>
+    </div>
+
+    <!--GITHUB WINDOW -->
+    <div class="window github-window hidden" id="githubWindow">
+      <div class="title-bar">
+        <div class="title-bar-text">🌐 GitHub – breama-oss</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close" class="closeBtn"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>Apri il repository GitHub in una nuova scheda:</p>
+        <button id="openGithubBtn">Apri GitHub</button>
+      </div>
+      <div class="status-bar">
+        <p class="status-bar-field">Ready</p>
+        <p class="status-bar-field">Windows 95 Edition</p>
+      </div>
+    </div>
+
+    <!-- TASKBAR -->
+    <div class="taskbar">
+      <button class="start-button" id="startButton">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect fill='%23ff0000' width='10' height='10'/%3E%3Crect fill='%2300ff00' x='10' width='10' height='10'/%3E%3Crect fill='%230000ff' y='10' width='10' height='10'/%3E%3Crect fill='%23ffff00' x='10' y='10' width='10' height='10'/%3E%3C/svg%3E" alt="Start" />
+        Start
+      </button>
+
+      <div class="start-menu hidden" id="startMenu">
+        <button id="logoutBtn">Log Out</button>
+      </div>
+
+      <div class="taskbar-apps">
+        <button class="taskbar-app active" id="cvTaskbarBtn">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect fill='%23000080' width='16' height='16'/%3E%3C/svg%3E" alt="" />
+          CV – Eldar Dedic
+        </button>
+        <button class="taskbar-app hidden" id="githubTaskbarBtn">
+          <img src="https://win98icons.alexmeub.com/icons/png/html-0.png" alt="" />
+          GitHub
+        </button>
+      </div>
+
+      <div class="taskbar-clock">
+        <span id="clock">00:00</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPTS -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js"
+    }
+  }
+  </script>
+  <script type="module" src="./main.js"></script>
+  <script src="./desktop.js"></script>
+
+</body>
+</html>
