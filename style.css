@@ -237,8 +237,8 @@ html, body {
   position: absolute;
   top: 20px;
   left: 20px;
-  right: 20px;
-  bottom: 50px;
+  width: calc(100% - 40px);
+  height: calc(100% - 70px);
   display: flex;
   flex-direction: column;
   box-shadow: 4px 4px 10px rgba(240, 116, 116, 0.5);
@@ -247,8 +247,8 @@ html, body {
 .cv-window.maximized {
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 28px;
+  width: 100%;
+  height: calc(100% - 28px);
 }
 
 /* GITHUB WINDOW */

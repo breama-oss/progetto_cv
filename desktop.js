@@ -38,8 +38,10 @@ function setupWindow(windowEl, taskbarBtn, iconEl, extraInit) {
   let dragOffsetY = 0;
 
   // Saved just before maximizing so restore brings the window back exactly.
-  let savedLeft = null;
-  let savedTop  = null;
+  let savedLeft   = null;
+  let savedTop    = null;
+  let savedWidth  = null;
+  let savedHeight = null;
 
   const titleBar    = windowEl.querySelector('.title-bar');
   const minimizeBtn = windowEl.querySelector('[aria-label="Minimize"]');
@@ -84,23 +86,28 @@ function setupWindow(windowEl, taskbarBtn, iconEl, extraInit) {
   // Maximize / Restore
   function toggleMaximize() {
     if (windowEl.classList.contains('maximized')) {
-      // Restore
+      // Restore: remove class, then put back saved inline geometry
       windowEl.classList.remove('maximized');
       maximizeBtn?.setAttribute('aria-label', 'Maximize');
-      windowEl.style.left   = savedLeft ?? '';
-      windowEl.style.top    = savedTop  ?? '';
-      windowEl.style.right  = 'auto';
-      windowEl.style.bottom = 'auto';
+      windowEl.style.left   = savedLeft   ?? '';
+      windowEl.style.top    = savedTop    ?? '';
+      windowEl.style.width  = savedWidth  ?? '';
+      windowEl.style.height = savedHeight ?? '';
     } else {
-      // Save current painted position then maximize
-      const rect = windowEl.getBoundingClientRect();
-      savedLeft = `${rect.left}px`;
-      savedTop  = `${rect.top}px`;
+      // Save current painted geometry, then let CSS handle the maximized layout
+      const rect  = windowEl.getBoundingClientRect();
+      savedLeft   = windowEl.style.left   || `${rect.left}px`;
+      savedTop    = windowEl.style.top    || `${rect.top}px`;
+      savedWidth  = windowEl.style.width  || `${rect.width}px`;
+      savedHeight = windowEl.style.height || `${rect.height}px`;
 
+      // Clear all inline position/size so .maximized CSS rules take full control
+      windowEl.style.left   = '';
+      windowEl.style.top    = '';
+      windowEl.style.width  = '';
+      windowEl.style.height = '';
       windowEl.classList.add('maximized');
       maximizeBtn?.setAttribute('aria-label', 'Restore');
-      windowEl.style.left = '';
-      windowEl.style.top  = '';
     }
   }
 
@@ -116,10 +123,10 @@ function setupWindow(windowEl, taskbarBtn, iconEl, extraInit) {
   closeBtn?.addEventListener('click', () => {
     windowEl.classList.add('hidden');
     windowEl.classList.remove('maximized');
+    windowEl.style.left = windowEl.style.top = windowEl.style.width = windowEl.style.height = '';
     taskbarBtn.classList.add('hidden');
     taskbarBtn.classList.remove('active');
-    savedLeft = null;
-    savedTop  = null;
+    savedLeft = savedTop = savedWidth = savedHeight = null;
   });
 
   // Taskbar button
@@ -159,40 +166,20 @@ function setupWindow(windowEl, taskbarBtn, iconEl, extraInit) {
  * @param {HTMLElement} iconEl - The .desktop-icon element
  */
 function makeDraggableIcon(iconEl) {
-  let isDragging  = false;
-  let hasMoved    = false;
-  let startX      = 0;
-  let startY      = 0;
-  let offsetX     = 0;
-  let offsetY     = 0;
+  let isDragging = false;
+  let hasMoved   = false;
+  let startX     = 0;
+  let startY     = 0;
 
   const DRAG_THRESHOLD = 5; // px
 
   iconEl.addEventListener('mousedown', (e) => {
-    // Only primary button
     if (e.button !== 0) return;
-    e.preventDefault(); // prevent text selection while dragging
-
-    const desktop = document.getElementById('desktop');
-    const desktopRect = desktop.getBoundingClientRect();
-    const iconRect    = iconEl.getBoundingClientRect();
-
-    startX  = e.clientX;
-    startY  = e.clientY;
-    hasMoved = false;
-
-    // Switch icon to absolute positioning if it isn't already
-    if (iconEl.style.position !== 'absolute') {
-      iconEl.style.position = 'absolute';
-      iconEl.style.left = `${iconRect.left - desktopRect.left}px`;
-      iconEl.style.top  = `${iconRect.top  - desktopRect.top}px`;
-      iconEl.style.margin = '0';
-    }
-
-    offsetX = e.clientX - iconEl.getBoundingClientRect().left;
-    offsetY = e.clientY - iconEl.getBoundingClientRect().top;
-
+    e.preventDefault();
     isDragging = true;
+    hasMoved   = false;
+    startX     = e.clientX;
+    startY     = e.clientY;
   });
 
   document.addEventListener('mousemove', (e) => {
@@ -200,21 +187,38 @@ function makeDraggableIcon(iconEl) {
 
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
-
     if (!hasMoved && Math.sqrt(dx * dx + dy * dy) < DRAG_THRESHOLD) return;
-    hasMoved = true;
+
+    // On the first real move: re-parent the icon to #desktop and pin its
+    // current on-screen position as absolute coords. Reading getBoundingClientRect
+    // here (during actual movement) guarantees the desktop is visible and painted.
+    if (!hasMoved) {
+      hasMoved = true;
+      const desktop     = document.getElementById('desktop');
+      const desktopRect = desktop.getBoundingClientRect();
+      const iconRect    = iconEl.getBoundingClientRect();
+
+      if (iconEl.parentElement !== desktop) {
+        desktop.appendChild(iconEl);
+      }
+
+      iconEl.style.position = 'absolute';
+      iconEl.style.margin   = '0';
+      iconEl.style.left     = `${iconRect.left - desktopRect.left}px`;
+      iconEl.style.top      = `${iconRect.top  - desktopRect.top}px`;
+    }
 
     iconEl.classList.add('dragging');
 
     const desktop     = document.getElementById('desktop');
     const desktopRect = desktop.getBoundingClientRect();
     const iconRect    = iconEl.getBoundingClientRect();
-    const taskbarH    = 28; // keep icon above taskbar
+    const taskbarH    = 28;
 
-    let newLeft = e.clientX - desktopRect.left - offsetX;
-    let newTop  = e.clientY - desktopRect.top  - offsetY;
+    // Centre the icon under the cursor
+    let newLeft = e.clientX - desktopRect.left - iconRect.width  / 2;
+    let newTop  = e.clientY - desktopRect.top  - iconRect.height / 2;
 
-    // Clamp within desktop bounds (above taskbar)
     newLeft = Math.max(0, Math.min(newLeft, desktopRect.width  - iconRect.width));
     newTop  = Math.max(0, Math.min(newTop,  desktopRect.height - iconRect.height - taskbarH));
 
